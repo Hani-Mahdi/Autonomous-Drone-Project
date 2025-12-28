@@ -48,15 +48,23 @@ Execute:
 abort if alt wasnt reached within threshold (current_time - take_off_start > threshold)
      
 Output: {
-    status: "Complete" | "Abort"
+    status: "Complete" | "In progress" | "Abort"
     issue : "none" | "speed issue" | "Cant reach alt" | "cant hold alt"
 }
 -----------------------------------------------------------------------------------------------------------------
 Function: Flight
-Input: Battery Percentage, altitude, take_off_start, current_time
+Input: Battery Percentage, altitude, flight_start_time, current_time, target, cur_loc, targ_loc
 
 Execute:
 
+if !target and (current_time - flight_start_time > threshold)
+    - status = Complete
+    - state -> Landing
 
-        
+Output: {
+    status = "Complete" | "Running" | "Abort"
+
+}
+-----------------------------------------------------------------------------------------------------------------
+Function: Search & Detect
 '''
